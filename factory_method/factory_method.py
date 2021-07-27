@@ -83,7 +83,7 @@ class SpaceLab(ABC):
         return course
 
     @abstractmethod
-    def create_course(self, coffee_type):
+    def create_course(self, course_type):
         pass
 
 

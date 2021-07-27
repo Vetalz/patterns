@@ -89,8 +89,8 @@ class Director:
 
 
 if __name__ == '__main__':
-    director = Director()
     builder = SalamiPizzaBuilder()
+    director = Director()
     director.set_builder(builder)
     director.make_pizza()
     pizza = builder.get_pizza()

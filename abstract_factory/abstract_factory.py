@@ -21,42 +21,48 @@ class TextField(ABC):
 
 
 class WindowsButton(Button):
-    os = 'Windows'
+    def __init__(self):
+        self.os = 'Windows'
 
     def create(self):
         print(f'create button for {self.os}')
 
 
 class WindowsSelect(Select):
-    os = 'Windows'
+    def __init__(self):
+        self.os = 'Windows'
 
     def create(self):
         print(f'create select for {self.os}')
 
 
 class WindowsTextField(TextField):
-    os = 'Windows'
+    def __init__(self):
+        self.os = 'Windows'
 
     def create(self):
         print(f'create textfield for {self.os}')
 
 
 class LinuxButton(Button):
-    os = 'Linux'
+    def __init__(self):
+        self.os = 'Linux'
 
     def create(self):
         print(f'create button for {self.os}')
 
 
 class LinuxSelect(Select):
-    os = 'Linux'
+    def __init__(self):
+        self.os = 'Linux'
 
     def create(self):
         print(f'create select for {self.os}')
 
 
 class LinuxTextField(TextField):
-    os = 'Linux'
+    def __init__(self):
+        self.os = 'Linux'
 
     def create(self):
         print(f'create textfield for {self.os}')
