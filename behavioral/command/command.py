@@ -3,32 +3,27 @@ from abc import ABC, abstractmethod
 
 class Command(ABC):
     @abstractmethod
-    def execute(self, text):
+    def execute(self):
         pass
 
 
-class Button(Command):
+class Save(Command):
     def __init__(self, r):
         self._receiver = r
 
-    def execute(self, text):
-        self._receiver.save(text)
+    def execute(self, *args):
+        self._receiver.save(*args)
 
 
-class ContextMenu(Command):
+class Load(Command):
     def __init__(self, r):
-        self._receiver = receiver
+        self._receiver = r
 
-    def execute(self, text):
-        self._receiver.save(text)
-
-
-class CtrlS(Command):
-    def __init__(self, r):
-        self._receiver = receiver
-
-    def execute(self, text):
-        self._receiver.save(text)
+    def execute(self, *args):
+        if args:
+            print('Это команда загрузки. Она не требует параметры')
+        else:
+            self._receiver.load()
 
 
 class Invoker:
@@ -38,32 +33,32 @@ class Invoker:
     def set_command(self, command):
         self._command = command
 
-    def execute_command(self, text):
-        self._command.execute(text)
+    def execute_command(self, *args):
+        self._command.execute(*args)
 
 
 class Receiver:
-    def __init__(self):
-        self.text = None
-
-    def save(self, text):
-        self.text = text
+    def save(self, *args):
+        text = ' '.join(args)
         with open('content.txt', 'a') as f:
-            f.write(self.text + '\n')
+            f.write(text + '\n')
+
+    def load(self):
+        with open('content.txt') as f:
+            text = f.read()
+        print(text)
 
 
 if __name__ == '__main__':
     client = Invoker()
     receiver = Receiver()
-    button = Button(receiver)
-    context_menu = Button(receiver)
-    ctrl_s = Button(receiver)
+    button_save = Save(receiver)
+    button_load = Load(receiver)
 
-    client.set_command(button)
-    client.execute_command('Hello')
+    client.set_command(button_save)
+    client.execute_command('Hello', 'world')
 
-    client.set_command(context_menu)
-    client.execute_command('world')
+    client.set_command(button_load)
+    client.execute_command()
 
-    client.set_command(ctrl_s)
-    client.execute_command('!!!')
+    client.execute_command('!')
