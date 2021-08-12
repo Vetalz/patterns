@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+      <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+      <title>{{ title }}</title>
+  </head>
+  <body>
+    <section class="content">
+        <a href="{{ url_for('index') }}"><h1>{{ title }}</h1></a>
+        <form action="{{ url_for('index') }}" method="post" id="form_add"></form>
+        {%  for i in list %}
+            <form action="{{ url_for('index') }}" method="post" id="form_{{ i.id }}"></form>
+        {% endfor %}
+        <table class="table table-warning table-striped">
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Количество, кг</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for i in list %}
+                <tr>
+                    <td>
+                        {{ loop.index }}
+                        <input type="hidden" value="{{ i.id }}" form="form_{{ i.id }}" name="product_id">
+                    </td>
+                    <td>{{ i.product }}</td>
+                    <td>
+                        <input type="text" class="form-control" form="form_{{ i.id }}" name="quantity" value="{{ i.quantity }}">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-outline-primary" form="form_{{ i.id }}" name="btn" value="update" id="b_{{ i.id }}">Обновить</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-outline-danger" form="form_{{ i.id }}" name="btn" value="del">Удалить</button>
+                    </td>
+                </tr>
+            {% endfor%}
+            <tr>
+                <td>{{ (list|length) + 1 }}</td>
+                <td><input type="text" class="form-control" form="form_add" name="product"></td>
+                <td><input type="text" class="form-control" form="form_add" name="quantity"></td>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-outline-success" form="form_add" name="btn" value="add">Добавить</button>
+                </td>
+            </tr>
+        </table>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  </body>
+</html>
